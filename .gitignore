@@ -1,0 +1,5 @@
+.terraform
+.env
+manual-terraform-sa.json
+terraform.tfstate
+terraform.tfstate.backup
