@@ -1,11 +1,7 @@
 
 provider "google" {
   credentials = "${file("./manual-terraform-sa.json")}"    
-  #credentials = "${file("./simple-terraform-01-e07ecc346c62.json")}"    
-  #credentials = "${file("./simple-terraform-01-a961aed52c7d.json")}"    
-
-  
-  project = "open-source-01"
+  project = "simple-terraform-012"
   #region  = "europe-west1"
   zone    = "europe-west1-c"
 }

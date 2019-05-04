@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 set -eof pipefail
 
-. ./.env
+if [ -f ./.env ];then
+    . ./.env
+else
+    echo "Environment file is not available"
+    exit 1
+fi
+
 PROJECTS=$(gcloud projects list --format="table[no-heading](name)")
 if [ $(echo "${PROJECTS}" | grep "${PROJECT_ID}") ]; then
     echo "${PROJECT_ID} already exists"
@@ -19,9 +25,15 @@ fi
 if [ -f "manual-terraform-sa.json" ]; then
     echo "manual-terraform-sa.json already exists"
 else
-    gcloud --project ${PROJECT_ID} iam service-accounts keys create manual-terraform-sa.json --iam-account manual-terraform@simple-terraform-01.iam.gserviceaccount.com
+    gcloud --project ${PROJECT_ID} iam service-accounts keys create manual-terraform-sa.json --iam-account manual-terraform@${PROJECT_ID}.iam.gserviceaccount.com
 fi
 
-gcloud --project=${PROJECT_ID} projects add-iam-policy-binding ${PROJECT_ID} --member="serviceAccount:manual-terraform@simple-terraform-01.iam.gserviceaccount.com" --role='roles/owner'
+gcloud --project=${PROJECT_ID} projects add-iam-policy-binding ${PROJECT_ID} --member="serviceAccount:manual-terraform@${PROJECT_ID}.iam.gserviceaccount.com" --role='roles/owner'
+
+echo "NOTE: Billing is being enabled on the project ${PROJECT_ID}"
+gcloud beta billing projects link ${PROJECT_ID} --billing-account=${BILLING_ACCOUNT}
 
 gcloud --project=${PROJECT_ID} services enable servicemanagement.googleapis.com
+gcloud --project=${PROJECT_ID} services enable compute.googleapis.com
+
+
