@@ -1,10 +1,10 @@
 
 provider "google" {
-  credentials = "${file("./manual-terraform-sa.json")}"    
-  project = "simple-terraform-012"
-  #region  = "europe-west1"
-  zone    = "europe-west1-c"
+  credentials = "${file("${var.keyfile}")}"    
+  project = "${var.project_name}"
+  zone  = "${var.region_a_zone}"
 }
+
 
 resource "google_compute_instance" "vm_instance" {
   name         = "terraform-instance"
@@ -18,19 +18,13 @@ resource "google_compute_instance" "vm_instance" {
 
   network_interface {
     # A default network is created for all GCP projects
-    network       = "default"
+    network       = "${google_compute_network.vpc_network.self_link}"
     access_config = {
     }
   }
-
-  #network_interface {
-  #  # A default network is created for all GCP projects
-  #  network       = "${google_compute_network.vpc_network.self_link}"
-  #  access_config = {
-  #  }
-  #}
 }
-#resource "google_compute_network" "vpc_network" {
-#  name                    = "terraform-network"
-#  auto_create_subnetworks = "true"
-#}
+
+resource "google_compute_network" "vpc_network" {
+  name                    = "terraform-network"
+  auto_create_subnetworks = "true"
+}

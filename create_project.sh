@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eof pipefail
 
-if [ -f ./.env ];then
-    . ./.env
+if [ -f ./.env.sh ];then
+    . ./.env.sh
 else
     echo "Environment file is not available"
     exit 1
@@ -22,10 +22,10 @@ else
     gcloud --project ${PROJECT_ID} iam service-accounts create manual-terraform --display-name "manual-terraform-sa"
 fi
 
-if [ -f "manual-terraform-sa.json" ]; then
-    echo "manual-terraform-sa.json already exists"
+if [ -f "manual-terraform-sa-${PROJECT_ID}.json" ]; then
+    echo "manual-terraform-sa-${PROJECT_ID}.json already exists"
 else
-    gcloud --project ${PROJECT_ID} iam service-accounts keys create manual-terraform-sa.json --iam-account manual-terraform@${PROJECT_ID}.iam.gserviceaccount.com
+    gcloud --project ${PROJECT_ID} iam service-accounts keys create manual-terraform-sa-${PROJECT_ID}.json --iam-account manual-terraform@${PROJECT_ID}.iam.gserviceaccount.com
 fi
 
 gcloud --project=${PROJECT_ID} projects add-iam-policy-binding ${PROJECT_ID} --member="serviceAccount:manual-terraform@${PROJECT_ID}.iam.gserviceaccount.com" --role='roles/owner'

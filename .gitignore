@@ -1,6 +1,6 @@
 .terraform
-.env
-manual-terraform-sa.json
+.env.sh
+manual-terraform-sa*.json
 terraform.tfstate
 .terraform.tfstate.lock.info
 terraform.tfstate.backup
