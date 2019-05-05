@@ -1,4 +1,5 @@
 # README.md
+This repo demonstrates standing up a project using the SDK first. 
 
 * Deploy a simple instance group with one container running
 * Add a simple NLB
