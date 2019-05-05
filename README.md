@@ -5,6 +5,11 @@ This repo demonstrates standing up a project using the SDK first.
 * Add a simple NLB
 * Add the SSL certificate
 
+# Prerequisites
+* A GCP account
+* Terraform
+* GoogleCloud SDK
+
 # Configuring 
 Copy .env.sh.template to .env.sh and fill out the values.
 
