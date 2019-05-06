@@ -9,6 +9,15 @@ The example service that will be deployed into the project is a python helloworl
 * Add a simple NLB
 * Add the SSL certificate
 
+# TODO:
+Fix some of the issues:
+* Api needs enabling manually
+    gcloud --project simple-terraform-guestdemo-001 services enable cntfdemo.endpoints.simple-terraform-guestdemo-001.cloud.goog
+* The Ip address passed to the openapi schema is incorrect.  You'll need to modify the schema target ip to the external ip of the instance or NLB
+    gcloud --project=simple-terraform-demo-001 endpoints services deploy ./simple_api_server/openapi/service_api.template.fix.yaml
+* The container should be using gunicorn to host flask.
+
+
 # Prerequisites
 * A GCP account
 * Terraform
