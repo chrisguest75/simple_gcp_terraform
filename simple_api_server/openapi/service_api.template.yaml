@@ -9,8 +9,8 @@ info:
 #  target: "35.246.116.87"
 host: ${service_name}
 x-google-endpoints:
-    - name: ${service_name}
-      target: ${ip_address}
+  - name: ${service_name}
+    target: ${ip_address}
 
 consumes:
   - "application/json"
