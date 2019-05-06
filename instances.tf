@@ -18,6 +18,7 @@ resource "google_compute_region_instance_group_manager" "default" {
 
 resource "google_compute_region_autoscaler" "default" {
   name   = "demoserver-autoscaler-tf"
+
   target = "${google_compute_region_instance_group_manager.default.self_link}"
 
   autoscaling_policy = {
@@ -40,7 +41,7 @@ resource "google_compute_instance_template" "default" {
   tags = ["http-server", "https-server"]
 
   labels = {
-    environment = "dev"
+    environment = "${var.endpoint_name}"
     docker = "true"
     webserver = "true"
     terraform_managed = "true"
@@ -64,6 +65,10 @@ resource "google_compute_instance_template" "default" {
 
   network_interface {
     network = "default"
+
+    access_config {
+        nat_ip = ""
+    }
   }
 
   metadata {
@@ -90,4 +95,7 @@ data "template_file" "instance-startup-script" {
   }
 }
 
+output "instance_group_manager" {
+  value = "${google_compute_region_instance_group_manager.default.instance_group}"
+}
 
