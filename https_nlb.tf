@@ -4,7 +4,7 @@ resource "google_compute_managed_ssl_certificate" "default" {
   name = "${var.endpoint_name}-cert-tf"
 
   managed {
-    domains = ["${var.endpoint_name}.chrisguest.dev"]
+    domains = ["${var.endpoint_name}.${var.domain_name}"]
   }
 }
 
@@ -25,7 +25,7 @@ resource "google_compute_url_map" "default" {
   default_service = "${google_compute_backend_service.default.self_link}"
 
   host_rule {
-    hosts        = ["${var.endpoint_name}.chrisguest.dev"]
+    hosts        = ["${var.endpoint_name}.${var.domain_name}"]
     path_matcher = "allpaths"
   }
 

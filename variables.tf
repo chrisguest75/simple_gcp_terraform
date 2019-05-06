@@ -23,3 +23,7 @@ variable "region_a_zone" {
 variable "endpoint_name" {
   description = "The endpoint name"
 }
+
+variable "domain_name" {
+  description = "The domain name"
+}
