@@ -35,5 +35,6 @@ gcloud beta billing projects link ${PROJECT_ID} --billing-account=${BILLING_ACCO
 
 gcloud --project=${PROJECT_ID} services enable servicemanagement.googleapis.com
 gcloud --project=${PROJECT_ID} services enable compute.googleapis.com
-
+gcloud --project=${PROJECT_ID} services enable cloudresourcemanager.googleapis.com
+gcloud --project=${PROJECT_ID} services enable endpoints.googleapis.com
 

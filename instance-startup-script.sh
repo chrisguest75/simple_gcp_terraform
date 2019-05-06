@@ -13,6 +13,6 @@ add-apt-repository \
 apt-get update
 apt-get install -y docker-ce
 docker network create --driver bridge esp_net
-docker run --detach --name=echo --net=esp_net gcr.io/google-samples/echo-python:1.0
+docker run --detach --name=echo -e PORT=8080  --net=esp_net gcr.io/open-source-01/simple_gcp_terraform:latest
 docker run  --name=esp  --detach  --publish=80:8080 --net=esp_net gcr.io/endpoints-release/endpoints-runtime:1  --service=${service_name} --rollout_strategy=managed  --backend=echo:8080
 

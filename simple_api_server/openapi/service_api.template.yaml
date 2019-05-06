@@ -1,8 +1,16 @@
 swagger: "2.0"
 info:
-  description: A simple OpenAPIV2 Demonstration
+  description: A simple helloworld service
   version: "1.0.0"
   title: OpenAPI REST 
+#host: "tfcndemo.endpoints.simple-terraform-demo-001.cloud.goog"
+#x-google-endpoints:
+#- name: "tfcndemo.endpoints.simple-terraform-demo-001.cloud.goog"
+#  target: "35.246.116.87"
+host: ${service_name}
+x-google-endpoints:
+    - name: ${service_name}
+      target: ${ip_address}
 
 consumes:
   - "application/json"
