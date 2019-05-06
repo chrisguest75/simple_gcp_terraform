@@ -1,5 +1,8 @@
 # README.md
-This repo demonstrates standing up a project using the SDK first. 
+This repo demonstrates standing up a GCP project using the SDK first. 
+Then allowing you to use a created service account within the project to deploy resources in Terraform.
+
+The example service that will be deployed into the project is a python helloworld container using endpoint and an NLB.  
 
 * Deploy a simple instance group with one container running
 * Add a simple NLB
