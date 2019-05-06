@@ -6,25 +6,53 @@ provider "google" {
 }
 
 
-resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
-  machine_type = "f1-micro"
+resource "google_compute_instance_template" "default" {
+  name        = "demoserver-template-tf"
+  description = "This template is used to create app server instances."
 
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-1810-cosmic-v20190502"
-    }
+  tags = ["http-server", "https-server"]
+
+  labels = {
+    environment = "dev"
+    docker = "true"
+    webserver = "true"
+    terraform_managed = "true"
+  }
+
+  instance_description = "Used for hosting docker containers for endpoints"
+  machine_type         = "f1-micro"
+  can_ip_forward       = false
+
+  scheduling {
+    automatic_restart   = true
+    on_host_maintenance = "MIGRATE"
+  }
+
+  // Create a new boot disk from an image
+  disk {
+    source_image = "ubuntu-minimal-1804-bionic-v20190429"
+    auto_delete  = true
+    boot         = true
   }
 
   network_interface {
-    # A default network is created for all GCP projects
-    network       = "${google_compute_network.vpc_network.self_link}"
-    access_config = {
-    }
+    network = "default"
+  }
+
+  metadata {
+    "startup-script" = "${data.template_file.instance-startup-script.rendered}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }  
+}
+
+data "template_file" "instance-startup-script" {
+  template = "${file("${path.module}/instance-startup-script.sh")}"
+
+  vars {
+    service_name = "${var.endpoint_name}.endpoints.${var.project_name}.cloud.goog"
   }
 }
 
-resource "google_compute_network" "vpc_network" {
-  name                    = "terraform-network"
-  auto_create_subnetworks = "true"
-}

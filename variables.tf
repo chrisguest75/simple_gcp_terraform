@@ -12,3 +12,6 @@ variable "region_a_zone" {
   description = "The region and zone for the resources"
 }
 
+variable "endpoint_name" {
+  description = "The endpoint name"
+}
