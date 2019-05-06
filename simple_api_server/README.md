@@ -15,6 +15,12 @@ pipenv install --three
 ./service.py
 ```
 
+# Build and run
+```
+docker build .
+docker run -p 9000:9000 -e PORT=9000 imageid
+```
+
 # Local endpoints
 OpenAPI
 ```
