@@ -1,0 +1,35 @@
+swagger: "2.0"
+info:
+  description: A simple OpenAPIV2 Demonstration
+  version: "1.0.0"
+  title: OpenAPI REST 
+
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+#schemes: [http, https]
+
+basePath: "/api"
+
+paths:
+  /:
+    get:
+      tags: [Helloworld]
+      operationId: helloworld.read
+      summary: "Returns helloworld"
+      description: "Get helloworld"
+      responses:
+        '200':
+          description: "Successful"
+
+  /health:
+    get:
+      tags: [Health]
+      operationId: health.health
+      summary: Health Check
+      responses:
+        '200':
+          description: Status message for current health
+
+
