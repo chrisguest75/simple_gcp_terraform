@@ -8,6 +8,10 @@ variable "keyfile" {
   description = "The keyfile for project access"
 }
 
+variable "region_a" {
+  description = "The region and zone for the resources"
+}
+
 variable "region_a_zone" {
   description = "The region and zone for the resources"
 }
