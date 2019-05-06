@@ -25,7 +25,15 @@ export TF_VAR_keyfile=${GOOGLE_CLOUD_KEYFILE_JSON}
 . ./.env.sh
 ./create_project.sh
 terraform init
+terraform plan
 ```
+
+# Deploying
+```
+. ./.env.sh
+terraform apply
+```
+
 
 # Taking it down
 
