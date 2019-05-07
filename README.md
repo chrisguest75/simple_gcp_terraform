@@ -9,6 +9,25 @@ The example service that will be deployed into the project is a python helloworl
 * Add a simple NLB
 * Add the SSL certificate
 
+# NOTES:
+It uses - GCP, SSL certificates, NLB, Docker, Python, Swagger, API Endpoints and GCE VM's.  A GKE version will be coming soon.
+
+This could have been achieved with a serverless solution and this would have had its merits. However, I thought I'd create an interesting exercise.  
+
+* The API endpoint will return "hello world"
+curl http://cntfdemo.endpoints.simple-terraform-guestdemo-001.cloud.goog/api/helloworld\?key\=[key]
+
+* It uses an API key as part of the endpoints simple auth.  The idea is that this allow rate limiting and all the goodness of a API gateway.
+curl https://cntfdemo.guestcode.uk/api/helloworld\?key=[key]
+
+* There is also a health endpoint. 
+curl http://cntfdemo.endpoints.simple-terraform-guestdemo-001.cloud.goog/api/health\?key\=[key]
+
+* There is also a registered subdomain. cntfdemo.guestcode.uk.  However, there is some slight misconfiguration that needs addressing.  This is where I have run out of time.  
+curl https://cntfdemo.guestcode.uk/api/helloworld\?key=[key]
+
+
+
 # TODO:
 Fix some of the issues:
 * Api needs enabling manually
@@ -16,6 +35,7 @@ Fix some of the issues:
 * The Ip address passed to the openapi schema is incorrect.  You'll need to modify the schema target ip to the external ip of the instance or NLB
     gcloud --project=simple-terraform-demo-001 endpoints services deploy ./simple_api_server/openapi/service_api.template.fix.yaml
 * The container should be using gunicorn to host flask.
+* The NLB backend seems to be incorrectly configured.  It's not pointing correctly after deployment.
 
 
 # Prerequisites
